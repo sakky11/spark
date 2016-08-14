@@ -82,9 +82,7 @@ public final class ColumnarBatch {
    * calling this. This must be called at the end to clean up memory allocations.
    */
   public void close() {
-    for (ColumnVector c: columns) {
-      c.close();
-    }
+    Arrays.stream(columns).forEach(ColumnVector::close);
   }
 
   /**
@@ -99,7 +97,7 @@ public final class ColumnarBatch {
 
     // Ctor used if this is a top level row.
     private Row(ColumnarBatch parent) {
-      this.parent = parent;
+      this.parent = parent;a
       this.fixedLenRowSize = UnsafeRow.calculateFixedPortionByteSize(parent.numCols());
       this.columns = parent.columns;
     }
